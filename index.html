@@ -93,12 +93,19 @@
     <script>
       const quiz = document.getElementById('quiz');
       const result = document.getElementById('result');
-      const questionKeys = [...new Set([...quiz.querySelectorAll('input[type="radio"]')].map((input) => input.name))];
+      const radioInputs = [...quiz.querySelectorAll('input[type="radio"]')];
+      const questionNames = radioInputs.map((input) => input.name);
+      const questionKeys = [...new Set(questionNames)];
       const maxScorePerQuestion = 2;
 
       quiz.addEventListener('submit', (event) => {
         event.preventDefault();
         const formData = new FormData(quiz);
+        if (questionKeys.some((key) => formData.get(key) === null)) {
+          result.textContent = '请先完成全部题目。';
+          return;
+        }
+
         const score = questionKeys
           .map((key) => Number(formData.get(key)))
           .reduce((sum, v) => sum + v, 0);
