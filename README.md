@@ -4,4 +4,4 @@
 
 ## 本地使用
 
-直接在浏览器打开 `/tmp/workspace/Haru-LCY/OtomeGameTest/index.html` 即可体验。
+直接在浏览器打开仓库内的 `index.html` 即可体验。
