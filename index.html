@@ -94,6 +94,7 @@
       const quiz = document.getElementById('quiz');
       const result = document.getElementById('result');
       const questionKeys = [...new Set([...quiz.querySelectorAll('input[type="radio"]')].map((input) => input.name))];
+      const maxScorePerQuestion = 2;
 
       quiz.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -102,7 +103,7 @@
           .map((key) => Number(formData.get(key)))
           .reduce((sum, v) => sum + v, 0);
 
-        const maxScore = questionKeys.length * 2;
+        const maxScore = questionKeys.length * maxScorePerQuestion;
         const percent = Math.round((score / maxScore) * 100);
         let level = '路过型';
         let message = '你对日乙兴趣刚起步，先从口碑作入门就很不错。';
