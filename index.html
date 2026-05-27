@@ -93,22 +93,27 @@
     <script>
       const quiz = document.getElementById('quiz');
       const result = document.getElementById('result');
+      const questionKeys = [...new Set([...quiz.querySelectorAll('input[type="radio"]')].map((input) => input.name))];
 
       quiz.addEventListener('submit', (event) => {
         event.preventDefault();
         const formData = new FormData(quiz);
-        const score = ['q1', 'q2', 'q3', 'q4']
+        const score = questionKeys
           .map((key) => Number(formData.get(key) || 0))
           .reduce((sum, v) => sum + v, 0);
 
-        const percent = Math.round((score / 8) * 100);
+        const maxScore = questionKeys.length * 2;
+        const percent = Math.round((score / maxScore) * 100);
         let level = '路过型';
         let message = '你对日乙兴趣刚起步，先从口碑作入门就很不错。';
 
-        if (percent >= 40 && percent < 75) {
+        if (percent < 40) {
+          level = '路过型';
+          message = '你对日乙兴趣刚起步，先从口碑作入门就很不错。';
+        } else if (percent < 75) {
           level = '稳定摄入型';
           message = '你已经有稳定摄入，继续扩展题材会更有乐趣。';
-        } else if (percent >= 75) {
+        } else {
           level = '重度沉浸型';
           message = '你的日乙雷达非常敏锐，新作和老作都难逃你的收藏清单。';
         }
