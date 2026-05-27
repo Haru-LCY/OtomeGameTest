@@ -99,7 +99,7 @@
         event.preventDefault();
         const formData = new FormData(quiz);
         const score = questionKeys
-          .map((key) => Number(formData.get(key) || 0))
+          .map((key) => Number(formData.get(key)))
           .reduce((sum, v) => sum + v, 0);
 
         const maxScore = questionKeys.length * 2;
@@ -107,13 +107,10 @@
         let level = '路过型';
         let message = '你对日乙兴趣刚起步，先从口碑作入门就很不错。';
 
-        if (percent < 40) {
-          level = '路过型';
-          message = '你对日乙兴趣刚起步，先从口碑作入门就很不错。';
-        } else if (percent < 75) {
+        if (percent >= 40 && percent < 75) {
           level = '稳定摄入型';
           message = '你已经有稳定摄入，继续扩展题材会更有乐趣。';
-        } else {
+        } else if (percent >= 75) {
           level = '重度沉浸型';
           message = '你的日乙雷达非常敏锐，新作和老作都难逃你的收藏清单。';
         }
